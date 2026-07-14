@@ -31,7 +31,18 @@ st.title("Project Matcher")
 # Reads in live data from google sheets using Google Sheet API
 
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
-creds = Credentials.from_service_account_file("service_account.json", scopes=SCOPES)
+
+# Try to load credentials from Streamlit's secrets system (used once deployed)
+try:
+    has_secrets = "gcp_service_account" in st.secrets
+except Exception:
+    has_secrets = False
+
+if has_secrets:
+    # Running on Streamlit Cloud
+    creds = Credentials.from_service_account_info(dict(st.secrets["gcp_service_account"]), scopes=SCOPES)
+else:
+    creds = Credentials.from_service_account_file("service_account.json", scopes=SCOPES)
 gc = gspread.authorize(creds)
 
 INTERNS_SHEET_ID = os.getenv("INTERNS_SHEET_ID")

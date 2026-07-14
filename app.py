@@ -119,7 +119,7 @@ if st.button("Run Matching"):
             ]
 
             scored = [
-                (projects_df.iloc[j]["name"], util.cos_sim(intern_embeddings[i], project_embeddings[j]).item())
+                (projects_df.iloc[j]["project_name"], util.cos_sim(intern_embeddings[i], project_embeddings[j]).item())
                 for j in eligible_indices
             ]
 
@@ -136,7 +136,7 @@ if st.button("Run Matching"):
                 if percent < 50:
                     continue
                 has_shown_match = True
-                project_row = projects_df[projects_df["name"] == name].iloc[0]
+                project_row = projects_df[projects_df["project_name"] == name].iloc[0]
                 reason = generate_explanation(intern, project_row, score)
                 st.markdown(f"**{name}** — {percent}% match")
                 st.write(reason)

@@ -54,7 +54,7 @@ interns_df, projects_df = load_data()
 
 # Shows data
 
-with st.expander("📋 View raw data (interns & projects)"):
+with st.expander("View raw data (interns & projects)"):
     st.write("Interns:")
     st.dataframe(interns_df)
     st.write("Projects:")
@@ -117,7 +117,7 @@ if st.button("Run Matching"):
             st.markdown(f"### {intern['name']}")
 
             if int(intern["agile_comfort"]) <= 2:
-                st.warning(f"⚠️ {intern['name']} rated their agile/remote comfort as {intern['agile_comfort']}/5.")
+                st.warning(f"{intern['name']} rated their comfort working remote as {intern['agile_comfort']} out of 5.")
 
             has_shown_match = False
             for name, score in top3:

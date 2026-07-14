@@ -115,7 +115,7 @@ if st.button("Run Matching"):
             eligible_indices = [
                 j for j, project in projects_df.iterrows()
                 if project["slots_open"] > 0
-                and project["time_commitment_hrs"] <= intern["availability_hrs_per_week"] + 1
+                and project["weekly_time_commitment_hrs"] <= intern["availability_hrs_per_week"] + 1
             ]
 
             scored = [

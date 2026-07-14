@@ -34,8 +34,8 @@ SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 creds = Credentials.from_service_account_file("service_account.json", scopes=SCOPES)
 gc = gspread.authorize(creds)
 
-INTERNS_SHEET_ID = "1501gFJuBQILEw-2t2zeTNpRtvlGFZcW-odegybBI8pk"
-PROJECTS_SHEET_ID = "1sUMTAkNX48VQ4aCvEiAo-XhU8_pE4TkYc2eyljzbgJs"
+INTERNS_SHEET_ID = os.getenv("INTERNS_SHEET_ID")
+PROJECTS_SHEET_ID = os.getenv("PROJECTS_SHEET_ID")
 
 st.subheader("Live Data")
 
@@ -115,6 +115,9 @@ if st.button("Run Matching"):
             top3 = sorted(scored, key=lambda x: x[1], reverse=True)[:3]
 
             st.markdown(f"### {intern['name']}")
+
+            if int(intern["agile_comfort"]) <= 2:
+                st.warning(f"⚠️ {intern['name']} rated their agile/remote comfort as {intern['agile_comfort']}/5.")
 
             has_shown_match = False
             for name, score in top3:
